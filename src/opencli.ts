@@ -23,7 +23,7 @@ export async function runOpenCLI<J = unknown, E = unknown>(
       ok: exitCode === 0,
       stdout,
       stderr,
-      json: safeJsonParse(stdout, null as J | null) ?? undefined
+      json: safeJsonParse<J | null>(stdout, null) ?? undefined
     };
   } catch (error) {
     return {

@@ -25,8 +25,8 @@ export function toNumberLoose(value: unknown): number | undefined {
   const [, number, unit] = string.match(/^(\d+\.?\d*)\s*([万wW亿])?$/) || [];
 
   if (!number) {
-    const number = Number(string.replace(/[^\d.-]/g, ""));
-    return Number.isFinite(number) ? number : undefined;
+    const parsedNumber = Number(string.replace(/[^\d.-]/g, ""));
+    return Number.isFinite(parsedNumber) ? parsedNumber : undefined;
   }
 
   const num = Number(number);

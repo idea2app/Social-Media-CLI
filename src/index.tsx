@@ -34,28 +34,26 @@ const extractSocialStats = async (url: string, platform?: string): Promise<void>
   process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
 };
 
-const statisticCommand = (
-  <Command<CLIOptions, Promise<void>>
-    name="statistic"
-    parameters="<url>"
-    description="Fetch social content statistics via OpenCLI"
-    options={{
-      platform: {
-        shortcut: "p",
-        parameters: "<platform>",
-        description: "Force platform"
-      }
-    }}
-    executor={async (options, url) => {
-      if (typeof url !== "string" || !url.trim()) throw new Error("URL is required.");
-      await extractSocialStats(url, toPlatform(options.platform));
-    }}
-  />
-);
+const runStatistic = async (options: { platform: Data }, url: Data) => {
+  if (typeof url !== "string" || !url.trim()) throw new Error("URL is required.");
+  await extractSocialStats(url, toPlatform(options.platform));
+};
 
 await Command.execute(
   <Command name="social-media" version="0.1.0" description="Command Line utility for Social Media">
-    {statisticCommand}
+    <Command<CLIOptions, Promise<void>>
+      name="statistic"
+      parameters="<url>"
+      description="Fetch social content statistics via OpenCLI"
+      options={{
+        platform: {
+          shortcut: "p",
+          parameters: "<platform>",
+          description: "Force platform"
+        }
+      }}
+      executor={runStatistic}
+    />
     <Command
       name="stats"
       parameters="<url>"
@@ -67,10 +65,7 @@ await Command.execute(
           description: "Force platform"
         }
       }}
-      executor={async (options, url) => {
-        if (typeof url !== "string" || !url.trim()) throw new Error("URL is required.");
-        await extractSocialStats(url, toPlatform(options.platform));
-      }}
+      executor={runStatistic}
     />
   </Command>,
   process.argv.slice(2)
