@@ -8,8 +8,6 @@
     "declaration": true,
     "outDir": "dist",
     "rootDir": "src",
-    "jsx": "react-jsx",
-    "jsxImportSource": "commander-jsx",
     "types": ["node"]
   },
   "include": ["src/**/*"]
