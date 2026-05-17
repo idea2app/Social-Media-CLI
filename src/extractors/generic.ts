@@ -20,23 +20,29 @@ export async function extractGeneric(url: string, platform = "generic"): Promise
   result.raw = read.json;
   const text = stringifyWebReadPayload(read.json);
 
-  result.stats.like = regexNumber(text, [/点赞[^\d]{0,8}([\d.万wW亿]+)/, /like[^\d]{0,8}([\d.万wW亿]+)/i]);
+  result.statistic.like = regexNumber(text, [
+    /点赞[^\d]{0,8}([\d.万wW亿]+)/,
+    /like[^\d]{0,8}([\d.万wW亿]+)/i
+  ]);
 
-  result.stats.favorite = regexNumber(text, [
+  result.statistic.favorite = regexNumber(text, [
     /收藏[^\d]{0,8}([\d.万wW亿]+)/,
     /favorite[^\d]{0,8}([\d.万wW亿]+)/i,
     /bookmark[^\d]{0,8}([\d.万wW亿]+)/i
   ]);
 
-  result.stats.share = regexNumber(text, [
+  result.statistic.share = regexNumber(text, [
     /转发[^\d]{0,8}([\d.万wW亿]+)/,
     /分享[^\d]{0,8}([\d.万wW亿]+)/,
     /share[^\d]{0,8}([\d.万wW亿]+)/i
   ]);
 
-  result.stats.comment = regexNumber(text, [/评论[^\d]{0,8}([\d.万wW亿]+)/, /comment[^\d]{0,8}([\d.万wW亿]+)/i]);
+  result.statistic.comment = regexNumber(text, [
+    /评论[^\d]{0,8}([\d.万wW亿]+)/,
+    /comment[^\d]{0,8}([\d.万wW亿]+)/i
+  ]);
 
-  result.stats.view = regexNumber(text, [
+  result.statistic.view = regexNumber(text, [
     /播放[^\d]{0,8}([\d.万wW亿]+)/,
     /观看[^\d]{0,8}([\d.万wW亿]+)/,
     /view[^\d]{0,8}([\d.万wW亿]+)/i,

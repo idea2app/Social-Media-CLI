@@ -5,14 +5,7 @@ export interface SocialStatsResult {
   author?: string;
   publishedAt?: string | number;
   contentType?: string;
-  stats: {
-    like?: number;
-    favorite?: number;
-    share?: number;
-    comment?: number;
-    view?: number;
-    coin?: number;
-  };
+  statistic: Partial<Record<"like" | "favorite" | "share" | "comment" | "view" | "coin", number>>;
   comments: unknown[];
   raw: unknown;
   notes: string[];
@@ -32,14 +25,7 @@ export function createEmptyResult({
     author: undefined,
     publishedAt: undefined,
     contentType: undefined,
-    stats: {
-      like: undefined,
-      favorite: undefined,
-      share: undefined,
-      comment: undefined,
-      view: undefined,
-      coin: undefined
-    },
+    statistic: {},
     comments: [],
     raw: null,
     notes: []

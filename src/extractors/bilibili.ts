@@ -23,7 +23,7 @@ export async function extractBilibili(url: string): Promise<SocialStatsResult> {
     );
     result.contentType = "video";
 
-    result.stats.view = toNumberLoose(
+    result.statistic.view = toNumberLoose(
       firstDefined(
         pickByPaths(j, ["stat.view", "data.stat.view", "view", "play"]) as
           | string
@@ -31,17 +31,17 @@ export async function extractBilibili(url: string): Promise<SocialStatsResult> {
           | undefined
       )
     );
-    result.stats.like = toNumberLoose(
+    result.statistic.like = toNumberLoose(
       firstDefined(
         pickByPaths(j, ["stat.like", "data.stat.like", "like"]) as string | number | undefined
       )
     );
-    result.stats.coin = toNumberLoose(
+    result.statistic.coin = toNumberLoose(
       firstDefined(
         pickByPaths(j, ["stat.coin", "data.stat.coin", "coin"]) as string | number | undefined
       )
     );
-    result.stats.favorite = toNumberLoose(
+    result.statistic.favorite = toNumberLoose(
       firstDefined(
         pickByPaths(j, ["stat.favorite", "data.stat.favorite", "favorite"]) as
           | string
@@ -49,12 +49,12 @@ export async function extractBilibili(url: string): Promise<SocialStatsResult> {
           | undefined
       )
     );
-    result.stats.share = toNumberLoose(
+    result.statistic.share = toNumberLoose(
       firstDefined(
         pickByPaths(j, ["stat.share", "data.stat.share", "share"]) as string | number | undefined
       )
     );
-    result.stats.comment = toNumberLoose(
+    result.statistic.comment = toNumberLoose(
       firstDefined(
         pickByPaths(j, ["stat.reply", "data.stat.reply", "comment", "reply"]) as
           | string

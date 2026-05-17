@@ -28,7 +28,7 @@ export async function extractXiaohongshu(url: string): Promise<SocialStatsResult
     );
     result.contentType = "note";
 
-    result.stats.like = toNumberLoose(
+    result.statistic.like = toNumberLoose(
       firstDefined(
         pickByPaths(j, ["liked_count", "interact_info.liked_count", "data.interact_info.liked_count"]) as
           | string
@@ -36,7 +36,7 @@ export async function extractXiaohongshu(url: string): Promise<SocialStatsResult
           | undefined
       )
     );
-    result.stats.favorite = toNumberLoose(
+    result.statistic.favorite = toNumberLoose(
       firstDefined(
         pickByPaths(j, [
           "collected_count",
@@ -45,7 +45,7 @@ export async function extractXiaohongshu(url: string): Promise<SocialStatsResult
         ]) as string | number | undefined
       )
     );
-    result.stats.comment = toNumberLoose(
+    result.statistic.comment = toNumberLoose(
       firstDefined(
         pickByPaths(j, ["comment_count", "interact_info.comment_count", "data.interact_info.comment_count"]) as
           | string
@@ -53,7 +53,7 @@ export async function extractXiaohongshu(url: string): Promise<SocialStatsResult
           | undefined
       )
     );
-    result.stats.share = toNumberLoose(
+    result.statistic.share = toNumberLoose(
       firstDefined(
         pickByPaths(j, ["share_count", "interact_info.share_count", "data.interact_info.share_count"]) as
           | string

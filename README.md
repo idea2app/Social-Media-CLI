@@ -1,6 +1,7 @@
-# opencli-social-stats
+# Social-Media-CLI
+Command Line utility for Social Media publishing & statistic
 
-基于 OpenCLI 的最小版跨平台内容互动数据抓取工具（MVP）。
+基于 OpenCLI 的最小版跨平台内容互动数据抓取子命令（MVP）。
 
 ## 支持情况
 
@@ -8,16 +9,16 @@
 - 小红书：优先走 `opencli xiaohongshu note` / `comments`
 - 抖音 / 微信公众号 / 微信视频号：先走 `opencli web read` 通用兜底
 
-## 技术栈要求
+## 技术栈
 
-- TypeScript（`next`，对应 TS 6 线）
-- PNPM（package manager 标记为 `pnpm@11`）
+- TypeScript 6
+- PNPM 11
 - 命令行参数：`commander-jsx`
 - 内部命令调用：`zx`
 
 ## 前提
 
-1. 安装 Node.js 20+
+1. 安装 Node.js 22+
 2. 安装 OpenCLI：`npm install -g @jackwener/opencli`
 3. 按 OpenCLI 官方文档安装并启用 Browser Bridge 扩展
 4. Chrome 中保持相关平台登录态
@@ -25,24 +26,30 @@
 ## 安装
 
 ```bash
-pnpm install
-pnpm build
-pnpm link --global
+npm i social-media-cli -g
 ```
 
 ## 用法
 
+完整命令：
+
 ```bash
-social-stats "https://www.bilibili.com/video/BVxxxxxxxxx"
-social-stats "https://www.xiaohongshu.com/explore/xxxxxxxx"
-social-stats "https://mp.weixin.qq.com/s/xxxxxxxx"
-social-stats "https://www.douyin.com/video/xxxxxxxx"
+social-media statistic "https://www.bilibili.com/video/BVxxxxxxxxx"
+social-media statistic "https://www.xiaohongshu.com/explore/xxxxxxxx"
+social-media statistic "https://mp.weixin.qq.com/s/xxxxxxxx"
+social-media statistic "https://www.douyin.com/video/xxxxxxxx"
+```
+
+缩写别名：
+
+```bash
+sm stats "https://www.bilibili.com/video/BVxxxxxxxxx"
 ```
 
 可强制平台：
 
 ```bash
-social-stats "https://example.com/post/1" --platform generic
+social-media statistic "https://example.com/post/1" --platform generic
 ```
 
 ## 输出结构
@@ -53,12 +60,12 @@ social-stats "https://example.com/post/1" --platform generic
 - `author`
 - `publishedAt`
 - `contentType`
-- `stats.like`
-- `stats.favorite`
-- `stats.share`
-- `stats.comment`
-- `stats.view`
-- `stats.coin`
+- `statistic.like`
+- `statistic.favorite`
+- `statistic.share`
+- `statistic.comment`
+- `statistic.view`
+- `statistic.coin`
 - `comments`
 - `raw`
 - `notes`

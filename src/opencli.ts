@@ -1,48 +1,48 @@
 import { $ } from "zx";
 import { safeJsonParse } from "./utils.js";
 
-export interface OpenCLIResult {
+export interface OpenCLIResult<J, E> {
   ok: boolean;
   stdout: string;
   stderr: string;
-  json?: unknown;
-  error?: unknown;
+  json?: J;
+  error?: E;
 }
 
-export async function runOpenCLI(args: string[], timeout = 120_000): Promise<OpenCLIResult> {
+export async function runOpenCLI<J = unknown, E = unknown>(
+  args: string[],
+  timeout = 120_000
+): Promise<OpenCLIResult<J, E>> {
   try {
-    const output = await $({ timeout, nothrow: true })`opencli ${args}`;
-    const stdout = output.stdout.toString();
-    const stderr = output.stderr.toString();
+    const { stdout: output, stderr: errorOutput, exitCode } =
+      await $({ timeout, nothrow: true })`opencli ${args}`;
+    const stdout = output.toString();
+    const stderr = errorOutput.toString();
 
     return {
-      ok: output.exitCode === 0,
+      ok: exitCode === 0,
       stdout,
       stderr,
-      json: safeJsonParse(stdout, null)
+      json: safeJsonParse(stdout, null as J | null) ?? undefined
     };
   } catch (error) {
     return {
       ok: false,
-      error,
+      error: error as E,
       stdout: "",
       stderr: error instanceof Error ? error.message : String(error)
     };
   }
 }
 
-export function webRead(url: string): Promise<OpenCLIResult> {
-  return runOpenCLI(["web", "read", "--url", url, "-f", "json", "--download-images", "false"]);
-}
+export const webRead = <J = unknown, E = unknown>(url: string) =>
+  runOpenCLI<J, E>(["web", "read", "--url", url, "-f", "json", "--download-images", "false"]);
 
-export function bilibiliVideo(url: string): Promise<OpenCLIResult> {
-  return runOpenCLI(["bilibili", "video", url, "-f", "json"]);
-}
+export const bilibiliVideo = <J = unknown, E = unknown>(url: string) =>
+  runOpenCLI<J, E>(["bilibili", "video", url, "-f", "json"]);
 
-export function xhsNote(url: string): Promise<OpenCLIResult> {
-  return runOpenCLI(["xiaohongshu", "note", url, "-f", "json"]);
-}
+export const xhsNote = <J = unknown, E = unknown>(url: string) =>
+  runOpenCLI<J, E>(["xiaohongshu", "note", url, "-f", "json"]);
 
-export function xhsComments(url: string): Promise<OpenCLIResult> {
-  return runOpenCLI(["xiaohongshu", "comments", url, "-f", "json"]);
-}
+export const xhsComments = <J = unknown, E = unknown>(url: string) =>
+  runOpenCLI<J, E>(["xiaohongshu", "comments", url, "-f", "json"]);
