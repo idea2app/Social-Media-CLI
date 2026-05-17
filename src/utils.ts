@@ -20,7 +20,7 @@ export function toNumberLoose(value: unknown): number | undefined {
   const s = String(value).trim().replaceAll(",", "");
   if (!s) return undefined;
 
-  const match = s.match(/^([\d.]+)\s*([万wW亿])?$/);
+  const match = s.match(/^(\d+\.?\d*)\s*([万wW亿])?$/);
   if (!match) {
     const n = Number(s.replace(/[^\d.-]/g, ""));
     return Number.isFinite(n) ? n : undefined;
