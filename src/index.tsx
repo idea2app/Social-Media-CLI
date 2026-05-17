@@ -39,32 +39,28 @@ const runStatistic = async (options: { platform: Data }, url: Data) => {
   await extractSocialStats(url, toPlatform(options.platform));
 };
 
+const statisticOptions = {
+  platform: {
+    shortcut: "p",
+    parameters: "<platform>",
+    description: "Force platform"
+  }
+} as const;
+
 await Command.execute(
   <Command name="social-media" version="0.1.0" description="Command Line utility for Social Media">
     <Command<CLIOptions, Promise<void>>
       name="statistic"
       parameters="<url>"
       description="Fetch social content statistics via OpenCLI"
-      options={{
-        platform: {
-          shortcut: "p",
-          parameters: "<platform>",
-          description: "Force platform"
-        }
-      }}
+      options={statisticOptions}
       executor={runStatistic}
     />
     <Command
       name="stats"
       parameters="<url>"
       description='Alias of "statistic"'
-      options={{
-        platform: {
-          shortcut: "p",
-          parameters: "<platform>",
-          description: "Force platform"
-        }
-      }}
+      options={statisticOptions}
       executor={runStatistic}
     />
   </Command>,
