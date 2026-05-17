@@ -6,9 +6,9 @@ export function safeJsonParse<T>(text: string, fallback: T): T {
   }
 }
 
-export function firstDefined<T>(...values: (T | null | undefined | "")[]): T | undefined {
+export function firstDefined<T>(...values: (T | null | undefined)[]): T | undefined {
   for (const value of values) {
-    if (value !== undefined && value !== null && value !== "") return value;
+    if (value !== undefined && value !== null) return value;
   }
   return undefined;
 }
