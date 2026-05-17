@@ -1,0 +1,27 @@
+{
+  "name": "social-media-cli",
+  "version": "0.1.0",
+  "type": "module",
+  "packageManager": "pnpm@11.0.0",
+  "bin": {
+    "social-media": "./dist/index.js",
+    "sm": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "tsc -p tsconfig.json --noEmit",
+    "start": "tsx ./src/index.tsx"
+  },
+  "dependencies": {
+    "commander-jsx": "^0.7.3",
+    "lodash.get": "^4.4.2",
+    "web-utility": "^4.6.6",
+    "zx": "^8.8.5"
+  },
+  "devDependencies": {
+    "@types/lodash.get": "^4.4.9",
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^6"
+  }
+}
