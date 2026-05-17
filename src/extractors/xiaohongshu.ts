@@ -2,6 +2,8 @@ import { createEmptyResult, type SocialStatsResult } from "../normalize.js";
 import { firstDefined, pickByPaths, toNumberLoose } from "../utils.js";
 import { xhsComments, xhsNote, webRead } from "../opencli.js";
 
+const MAX_COMMENTS = 20;
+
 export async function extractXiaohongshu(url: string): Promise<SocialStatsResult> {
   const result = createEmptyResult({ url, platform: "xiaohongshu" });
 
@@ -73,7 +75,7 @@ export async function extractXiaohongshu(url: string): Promise<SocialStatsResult
       : firstDefined(data.comments, data.data, []);
 
     if (Array.isArray(arr)) {
-      result.comments = arr.slice(0, 20);
+      result.comments = arr.slice(0, MAX_COMMENTS);
     }
 
     if (result.raw && typeof result.raw === "object") {

@@ -8,7 +8,7 @@ export function safeJsonParse<T>(text: string, fallback: T): T {
 
 export function firstDefined<T>(...values: (T | null | undefined | "")[]): T | undefined {
   for (const value of values) {
-    if (value !== undefined && value !== null && value !== "") return value as T;
+    if (value !== undefined && value !== null && value !== "") return value;
   }
   return undefined;
 }
@@ -38,13 +38,27 @@ export function toNumberLoose(value: unknown): number | undefined {
 }
 
 export function detectPlatform(url: string): string {
-  const u = url.toLowerCase();
-  if (u.includes("bilibili.com") || u.includes("b23.tv")) return "bilibili";
-  if (u.includes("xiaohongshu.com") || u.includes("xhslink.com")) return "xiaohongshu";
-  if (u.includes("douyin.com")) return "douyin";
-  if (u.includes("mp.weixin.qq.com")) return "wechat_mp";
-  if (u.includes("channels.weixin.qq.com")) return "wechat_channels";
-  return "generic";
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase();
+
+    if (host === "b23.tv" || host === "bilibili.com" || host.endsWith(".bilibili.com")) {
+      return "bilibili";
+    }
+    if (
+      host === "xhslink.com" ||
+      host === "xiaohongshu.com" ||
+      host.endsWith(".xiaohongshu.com")
+    ) {
+      return "xiaohongshu";
+    }
+    if (host === "douyin.com" || host.endsWith(".douyin.com")) return "douyin";
+    if (host === "mp.weixin.qq.com") return "wechat_mp";
+    if (host === "channels.weixin.qq.com") return "wechat_channels";
+    return "generic";
+  } catch {
+    return "generic";
+  }
 }
 
 export function pickByPaths(obj: unknown, paths: string[]): unknown {

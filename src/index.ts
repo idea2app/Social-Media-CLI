@@ -13,7 +13,7 @@ function toPlatform(input: Data | undefined): string | undefined {
   return typeof input === "string" && input.trim() ? input : undefined;
 }
 
-async function handle(url: string, platform?: string): Promise<void> {
+async function extractSocialStats(url: string, platform?: string): Promise<void> {
   const finalPlatform = platform || detectPlatform(url);
 
   let result;
@@ -52,7 +52,7 @@ await Command.execute(
       if (typeof url !== "string" || !url.trim()) {
         throw new Error("URL is required.");
       }
-      await handle(url, toPlatform(options.platform));
+      await extractSocialStats(url, toPlatform(options.platform));
     }
   }),
   process.argv.slice(2)
